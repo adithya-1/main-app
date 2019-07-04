@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:not_bored/my_friends.dart';
 
 //PAGES
 import 'about.dart';
@@ -31,103 +30,10 @@ class _MyHomePageState extends State<MyHomePage> {
     }
   }
 
-  _signOutClose() async {
-    try {
-      await widget.auth.signOut();
-      widget.onSignedOut();
-    } catch (e) {
-      print(e);
-    }
-    Navigator.of(context).pop();
-  }
-
-  int _selectedIndex = 0;
-
-  bool _isEmailVerified = false;
-
-  @override
-  void initState() {
-    super.initState();
-
-    _checkEmailVerification();
-  }
-
-  void _checkEmailVerification() async {
-    _isEmailVerified = await widget.auth.isEmailVerified();
-    if (!_isEmailVerified) {
-      _showVerifyEmailDialog();
-    }
-  }
-
-  void _resentVerifyEmail() {
-    widget.auth.sendEmailVerification();
-    _showVerifyEmailSentDialog();
-  }
-
-  void _showVerifyEmailDialog() {
-    showDialog(
-      context: context,
-      builder: (BuildContext context) {
-        // return object of type Dialog
-        return AlertDialog(
-          title: new Text("Verify your account"),
-          content: new Text("Please verify account in the link sent to email"),
-          actions: <Widget>[
-            new FlatButton(
-              child: new Text("Resend link"),
-              onPressed: () {
-                Navigator.of(context).pop();
-                _resentVerifyEmail();
-              },
-            ),
-            new FlatButton(
-              child: new Text("Dismiss"),
-              onPressed: _signOutClose,
-            ),
-          ],
-        );
-      },
-    );
-  }
-
-  void _showVerifyEmailSentDialog() {
-    showDialog(
-      context: context,
-      builder: (BuildContext context) {
-        // return object of type Dialog
-        return AlertDialog(
-          title: new Text("Verify your account"),
-          content:
-              new Text("Link to verify account has been sent to your email"),
-          actions: <Widget>[
-            new FlatButton(
-              child: new Text("Dismiss"),
-              onPressed: _signOutClose,
-            ),
-          ],
-        );
-      },
-    );
-  }
-
-  void _onItemTapped(int index) {
-    if (index == 1) {
-      showSearch(context: context, delegate: DataSearch());
-    } else if (index == 2) {
-      Navigator.push(
-          context,
-          MaterialPageRoute(
-              builder: (BuildContext context) => MyFriendsPage()));
-    } else {
-      setState(() {
-        _selectedIndex = index;
-      });
-    }
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      
       appBar: AppBar(
         backgroundColor: const Color(0xFFf96327),
         title: Text("Not Bored"),
@@ -199,25 +105,8 @@ class _MyHomePageState extends State<MyHomePage> {
           ),
         ),
       ),
-      bottomNavigationBar: BottomNavigationBar(
-        items: const <BottomNavigationBarItem>[
-          BottomNavigationBarItem(
-            icon: Icon(Icons.home),
-            title: Text('Home'),
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.search),
-            title: Text('Search'),
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.people),
-            title: Text('Friends'),
-          ),
-        ],
-        currentIndex: _selectedIndex,
-        selectedItemColor: const Color(0xFFf96327),
-        onTap: _onItemTapped,
-      ),
     );
   }
 }
+
+

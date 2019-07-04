@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:not_bored/commonnav.dart';
 
 //PAGES
-import 'homepage.dart';
+import 'commonnav.dart';
 import 'login_page.dart';
 import 'package:not_bored/reg_page.dart';
 import 'auth.dart';
@@ -16,7 +17,7 @@ void main() {
 class MyApp extends StatelessWidget {
   final routes = <String, WidgetBuilder>{
     LoginPage.tag: (context) => LoginPage(),
-    MyHomePage.tag: (context) => MyHomePage(),
+    CommonNavBar.tag: (context) => CommonNavBar(),
     RegPage.tag: (context) => RegPage(),
     MyFriendsPage.tag: (context) => MyFriendsPage(),
   };

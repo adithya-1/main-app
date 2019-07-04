@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:not_bored/commonnav.dart';
 import 'login_page.dart';
 import 'auth.dart';
-import 'homepage.dart';
+import 'commonnav.dart';
 
 class RootPage extends StatefulWidget {
   RootPage({this.auth});
@@ -77,7 +78,7 @@ class _RootPageState extends State<RootPage> {
         break;
       case AuthStatus.LOGGED_IN:
         if (_userId.length > 0 && _userId != null) {
-          return new MyHomePage(
+          return new CommonNavBar(
             userId: _userId,
             auth: widget.auth,
             onSignedOut: _onSignedOut,
