@@ -2,6 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:not_bored/services/auth.dart';
 import 'package:not_bored/pages/splash.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'dart:async';
+import 'package:firebase_auth/firebase_auth.dart';
+
 
 
 class Edit extends StatefulWidget {
@@ -29,6 +32,7 @@ class _EditState extends State<Edit> {
 
     bool _isLoading = false;
 
+  
 @override
 
  Widget build(BuildContext context) {
@@ -43,15 +47,19 @@ class _EditState extends State<Edit> {
           }
           var userDocument = snapshot.data;
 
-     void initState() {
+    
+    /* void initState() {
    _isLoading = false;
     super.initState();
-    _fname = TextEditingController(text: userDocument['fname']);
-     _lname = TextEditingController(text: userDocument['lname']);
-    _status = TextEditingController(text: userDocument['status']);
-    _userid = TextEditingController(text: userDocument['userid']);
-    _phone = TextEditingController(text: userDocument['phone']);
-  }
+    _fname = TextEditingController(text: '');
+     _lname = TextEditingController(text: '');
+    _status = TextEditingController(text: '');
+    _userid = TextEditingController(text: '');
+    _phone = TextEditingController(text: '');
+  } */
+
+          
+
  bool _updateAndSave() {
     final form = _formKey.currentState;
     if (form.validate()) {
@@ -68,7 +76,8 @@ class _EditState extends State<Edit> {
       _isLoading = true;
     });
     if (_updateAndSave()) {
-      String userId = "";
+       FirebaseUser user = await widget.auth.getCurrentUser();
+      String userId = user.uid;
       try {
         Map _profile = {
           'fname': _fname.text,
@@ -78,6 +87,8 @@ class _EditState extends State<Edit> {
           'status': _status.text,  
         };
         userId = await widget.auth.useriden(_profile);
+      
+        widget.auth.updateUser(_profile, user);
          print(' $userId is updated');
          setState(() {
           _isLoading = false;
@@ -110,6 +121,7 @@ class _EditState extends State<Edit> {
     return Padding(
       padding: const EdgeInsets.fromLTRB(0.0, 100.0, 0.0, 0.0),
       child: new TextFormField(
+        initialValue: userDocument['fname'],
         controller: _fname,
         maxLines: 1,
         keyboardType: TextInputType.text,
@@ -130,7 +142,7 @@ class _EditState extends State<Edit> {
             setState(() {
               _isLoading = false;
             });
-            return 'Name can\'t be empty';
+            return 'First Name can\'t be empty';
           }
           return null;
         }, 
@@ -142,6 +154,7 @@ class _EditState extends State<Edit> {
     return Padding(
       padding: const EdgeInsets.fromLTRB(0.0, 15.0, 0.0, 0.0),
       child: new TextFormField(
+        initialValue: userDocument['lname'],
         controller: _lname,
         maxLines: 1,
         keyboardType: TextInputType.text,
@@ -162,7 +175,7 @@ class _EditState extends State<Edit> {
             setState(() {
               _isLoading = false;
             });
-            return 'Name can\'t be empty';
+            return 'Last Name can\'t be empty';
           }
           return null;
         }, 
@@ -174,6 +187,7 @@ class _EditState extends State<Edit> {
     return Padding(
       padding: const EdgeInsets.fromLTRB(0.0, 15.0, 0.0, 0.0),
       child: new TextFormField(
+        initialValue: userDocument['userid'],
         controller: _userid,
         maxLines: 1,
         keyboardType: TextInputType.text,
@@ -194,7 +208,7 @@ class _EditState extends State<Edit> {
             setState(() {
               _isLoading = false;
             });
-            return 'Name can\'t be empty';
+            return 'Userid can\'t be empty';
           }
           return null;
         }, 
@@ -206,6 +220,7 @@ class _EditState extends State<Edit> {
     return Padding(
       padding: const EdgeInsets.fromLTRB(0.0, 15.0, 0.0, 0.0),
       child: new TextFormField(
+        initialValue: userDocument['status'],
         controller: _status,
         maxLines: 1,
         keyboardType: TextInputType.text,
@@ -226,7 +241,7 @@ class _EditState extends State<Edit> {
             setState(() {
               _isLoading = false;
             });
-            return 'Name can\'t be empty';
+            return 'status can\'t be empty';
           }
           return null;
         }, 
@@ -238,6 +253,7 @@ class _EditState extends State<Edit> {
     return Padding(
       padding: const EdgeInsets.fromLTRB(0.0, 15.0, 0.0, 0.0),
       child: new TextFormField(
+        initialValue: userDocument['phone'],
         controller: _phone,
         maxLines: 1,
         keyboardType: TextInputType.phone,
@@ -334,6 +350,7 @@ class _EditState extends State<Edit> {
 
 });
  }
+ 
  
 
 }

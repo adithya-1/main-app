@@ -82,7 +82,7 @@ class Auth implements BaseAuth {
       'name': profile['fname'] + ' ' + profile['lname'],
        'userid': profile['userid'],
       'phone': profile['phone'],
-      'status': 'I am Bored',
+      'status': profile['status'],
     });
    }
 
