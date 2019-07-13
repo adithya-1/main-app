@@ -27,7 +27,7 @@ class _EditState extends State<Edit> {
   TextEditingController _phone;
   TextEditingController _status;
 
-    bool _isLoading;
+    bool _isLoading = false;
 
 @override
 
@@ -89,7 +89,19 @@ class _EditState extends State<Edit> {
           
         });
       }
+      Navigator.of(context).pop();
     }
+  }
+
+ Widget _showLogo() {
+    return Text('EDIT PROFILE',
+        style: TextStyle(
+          color: Colors.black,
+          fontSize: 30,
+          fontWeight: FontWeight.bold,
+          letterSpacing: 3.0,
+        ),
+        textAlign: TextAlign.center);
   }
 
 
@@ -110,7 +122,7 @@ class _EditState extends State<Edit> {
             focusedBorder: UnderlineInputBorder(
                 borderSide: BorderSide(color: Colors.white70)),
             icon: new Icon(
-              Icons.mail,
+              Icons.person,
               color: Colors.black,
             )),
         validator: (value) {
@@ -142,7 +154,7 @@ class _EditState extends State<Edit> {
             focusedBorder: UnderlineInputBorder(
                 borderSide: BorderSide(color: Colors.white70)),
             icon: new Icon(
-              Icons.mail,
+              Icons.person,
               color: Colors.black,
             )),
         validator: (value) {
@@ -174,7 +186,7 @@ class _EditState extends State<Edit> {
             focusedBorder: UnderlineInputBorder(
                 borderSide: BorderSide(color: Colors.white70)),
             icon: new Icon(
-              Icons.mail,
+              Icons.verified_user,
               color: Colors.black,
             )),
         validator: (value) {
@@ -192,7 +204,7 @@ class _EditState extends State<Edit> {
 
    Widget _showstatus() {
     return Padding(
-      padding: const EdgeInsets.fromLTRB(0.0, 100.0, 0.0, 0.0),
+      padding: const EdgeInsets.fromLTRB(0.0, 15.0, 0.0, 0.0),
       child: new TextFormField(
         controller: _status,
         maxLines: 1,
@@ -206,7 +218,7 @@ class _EditState extends State<Edit> {
             focusedBorder: UnderlineInputBorder(
                 borderSide: BorderSide(color: Colors.white70)),
             icon: new Icon(
-              Icons.mail,
+              Icons.label_outline,
               color: Colors.black,
             )),
         validator: (value) {
@@ -238,7 +250,7 @@ class _EditState extends State<Edit> {
             focusedBorder: UnderlineInputBorder(
                 borderSide: BorderSide(color: Colors.white70)),
             icon: new Icon(
-              Icons.mail,
+              Icons.phone,
               color: Colors.black,
             )),
         validator: (value) {
@@ -264,16 +276,16 @@ class _EditState extends State<Edit> {
         ),
         onPressed: _updateAndSubmit,
         padding: EdgeInsets.all(12),
-        color: Colors.white,
+        color:  const Color(0xFFf96327),
         child:
-            Text('Save', style: TextStyle(color: const Color(0xFFf96327))),
+            Text('Save', style: TextStyle(color:Colors.white)),
       ),
     );
   }
 
  Widget _showBody() {
     return new Scaffold(
-        backgroundColor: const Color(0xFFf96327),
+        
         appBar: AppBar(
                 backgroundColor: PrimaryColor,
                 automaticallyImplyLeading: true,
@@ -286,6 +298,7 @@ class _EditState extends State<Edit> {
                 shrinkWrap: true,
                 children: <Widget>[
                   SizedBox(height: 50.0),
+                   _showLogo(),
                   _showFirstName(),
                   _showLastName(),
                   _showUserId(),
