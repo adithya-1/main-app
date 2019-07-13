@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:not_bored/services/auth.dart';
 import 'package:not_bored/models/root.dart';
-
+import 'package:not_bored/pages/editprofile.dart';
 import 'package:not_bored/pages/home.dart';
 import 'package:not_bored/pages/login.dart';
 import 'package:not_bored/pages/reg.dart';
@@ -15,6 +15,7 @@ class MyApp extends StatelessWidget {
     HomePage.tag: (context) => HomePage(),
     RegPage.tag: (context) => RegPage(),
     MyFriendsPage.tag: (context) => MyFriendsPage(),
+    Edit.tag: (context) => Edit(),
   };
 
   @override

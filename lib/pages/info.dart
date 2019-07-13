@@ -4,7 +4,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:image_picker/image_picker.dart';
 import 'dart:io';
-
+import 'package:not_bored/pages/editprofile.dart';
 import 'package:not_bored/pages/splash.dart';
 
 class MyInfo extends StatefulWidget {
@@ -14,6 +14,8 @@ class MyInfo extends StatefulWidget {
   final String userId;
   @override
   _MyInfoState createState() => _MyInfoState();
+ 
+
 }
 
 const PrimaryColor = const Color(0xFFf96327);
@@ -61,10 +63,28 @@ class _MyInfoState extends State<MyInfo> {
                 backgroundColor: PrimaryColor,
                 automaticallyImplyLeading: true,
                 title: Text('Profile Page'),
+                actions: <Widget>[
+    FlatButton(
+      textColor: Colors.white,
+      onPressed: () {
+       // Navigator.of(context).pushNamed(Edit.tag);
+         Navigator.push(
+              context,
+              MaterialPageRoute(
+                  builder: (BuildContext context) =>
+                      Edit(userId: widget.userId,
+                            auth: widget.auth,)));
+      },
+      child: Text("Edit"),
+      shape: CircleBorder(side: BorderSide(color: Colors.transparent)),
+    ),
+  ],
                 leading: IconButton(
                   icon: Icon(Icons.arrow_back),
                   onPressed: () => Navigator.pop(context, false),
-                )),
+                )
+      
+                ),
             body: new Stack(
               children: <Widget>[
                 ClipPath(

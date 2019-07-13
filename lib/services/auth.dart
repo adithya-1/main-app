@@ -7,11 +7,15 @@ abstract class BaseAuth {
 
   Future<String> signUp(Map profile);
 
+    Future<String> useriden(Map profile);
+
   Future<FirebaseUser> getCurrentUser();
 
   Future<void> signOut();
 
   Future<void> createUser(Map profile, FirebaseUser user);
+
+  Future<void> updateUser(Map profile, FirebaseUser user);
 
   Future<void> uploadProPic(String url);
 
@@ -39,6 +43,15 @@ class Auth implements BaseAuth {
     return user.uid;
   }
 
+   Future<String> useriden(Map profile) async {
+    FirebaseUser user = await _firebaseAuth.currentUser();
+    if (user.uid != null) {
+      updateUser(profile, user);
+    }
+    return user.uid;
+  }
+
+
   Future<FirebaseUser> getCurrentUser() async {
     FirebaseUser user = await _firebaseAuth.currentUser();
     return user;
@@ -61,6 +74,18 @@ class Auth implements BaseAuth {
       'isMailVerified': false,
     });
   }
+
+   Future<void> updateUser(Map profile, FirebaseUser user) async {
+   //FirebaseUser user = await _firebaseAuth.currentUser();
+    DocumentReference _ref = _firestore.collection('users').document(user.uid);
+    _ref.updateData(<String, dynamic>{
+      'name': profile['fname'] + ' ' + profile['lname'],
+       'userid': profile['userid'],
+      'phone': profile['phone'],
+      'status': 'I am Bored',
+    });
+   }
+
 
   Future<void> uploadProPic(String url) async {
     FirebaseUser user = await _firebaseAuth.currentUser();
