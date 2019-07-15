@@ -120,6 +120,7 @@ class _LandingPageState extends State<LandingPage> {
     var provider = Provider.of<LandingPageProvider>(context);
     var currentTab = [
       HomePage(),
+      DataSearch(),
       MyFriendsPage(),
     ];
 
@@ -201,9 +202,7 @@ class _LandingPageState extends State<LandingPage> {
               elevation: 4.0,
               backgroundColor: Colors.deepOrangeAccent,
               child: const Icon(Icons.search, color: Colors.white),
-              onPressed: () {
-                showSearch(context: context, delegate: DataSearch());
-              },
+               onPressed: () => provider.currentIndex = 1,
             ),
             floatingActionButtonLocation:
                 FloatingActionButtonLocation.centerDocked,
@@ -220,7 +219,7 @@ class _LandingPageState extends State<LandingPage> {
                   ),
                   IconButton(
                     icon: Icon(Icons.people, color: Colors.white),
-                    onPressed: () => provider.currentIndex = 1,
+                    onPressed: () => provider.currentIndex = 2,
                   ),
                 ],
               ),
